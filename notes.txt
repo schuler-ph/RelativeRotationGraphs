@@ -1,0 +1,7 @@
+etf: spy mit sektoren
+
+alle vergleichen sich mit spy
+xlp, xlf, xlk, xlv, xlre, xlb, xli, xlu
+
+Symbol spy für "SPDR S&P 500 Trust" funktioniert
+Symbol xlp
