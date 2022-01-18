@@ -1,1 +1,4 @@
 apikey.txt
+venv/
+__pycache__/
+__pycache__/rrg_db.cpython-310.pyc

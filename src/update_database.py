@@ -6,20 +6,27 @@ dbM = DatabaseManager()
 dbM.drop_table()
 dbM.create_table()
 
+config = dbM.getConfig()
+config["symbols"].append(config["compare_to"])
+
 apikey = open("apikey.txt", "r").read()
-ack = "5. adjusted close" # 5 Adjusted Close key"
+dataKey = "Weekly Time Series"
+valueKey = "4. close"
 
 def buildUrl(symbol, apikey):
-    url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=" + symbol + "&apikey=" + apikey
-    # url += "&outputsize=full"
+    url = "https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol="
+    url += symbol
+    url += "&apikey="
+    url += apikey
+    url += "&outputsize=full"
     return url
 
-for symbol in dbM.config["symbols"]:
+for symbol in config["symbols"]:
     print("Inserting %s data from AlphaVantage into Database..." % symbol)
 
     response = requests.get(buildUrl(symbol, apikey))
 
-    if "Time Series (Daily)" not in response.json():
+    if dataKey not in response.json():
         # Error handling
         # "Note" => too many requests per minute
         # "Error Message" => invalid symbol
@@ -34,14 +41,14 @@ for symbol in dbM.config["symbols"]:
 
             print()
 
-
         if "Error Message" in response.json():
             print("Invalid symbol, next symbol...\n")
             continue
 
-    tsda = response.json()["Time Series (Daily)"] # Time Series (Daily) Adjusted
+    wts = response.json()[dataKey]
     dbM = DatabaseManager()
 
-    for key, value in tsda.items():
-        dbM.insert_data(key, value[ack], symbol)
-        # print(key, value[ack], symbol)
+    for key, value in wts.items():
+        dbM.insert_value(symbol, key, value[valueKey])
+
+dbM.commit()
