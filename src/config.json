@@ -2,5 +2,6 @@
     "symbols": ["xlp", "xlf", "xlk", "xlv", "xlre", "xlb", "xli", "xlu"],
     "compare_to": "spy",
     "rs_ratio_avg": 12,
-    "rs_momentum_avg": 5
+    "rs_momentum_avg": 5,
+    "line_length": 5
 }

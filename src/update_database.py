@@ -2,11 +2,11 @@ from rrg_db import DatabaseManager
 import requests
 import time
 
-dbM = DatabaseManager()
-dbM.drop_table()
-dbM.create_table()
+db = DatabaseManager()
+db.drop_table()
+db.create_table()
 
-config = dbM.get_config()
+config = db.get_config()
 config["symbols"].append(config["compare_to"])
 
 apikey = open("apikey.txt", "r").read()
@@ -48,9 +48,9 @@ for symbol in config["symbols"]:
             continue
 
     wts = response.json()[dataKey]
-    dbM = DatabaseManager()
+    db = DatabaseManager()
 
     for key, value in wts.items():
-        dbM.insert_value(symbol, key, value[valueKey])
+        db.insert_value(symbol, key, value[valueKey])
 
-dbM.commit()
+db.commit()
