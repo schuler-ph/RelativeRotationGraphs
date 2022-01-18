@@ -6,12 +6,13 @@ dbM = DatabaseManager()
 dbM.drop_table()
 dbM.create_table()
 
-config = dbM.getConfig()
+config = dbM.get_config()
 config["symbols"].append(config["compare_to"])
 
 apikey = open("apikey.txt", "r").read()
 dataKey = "Weekly Time Series"
 valueKey = "4. close"
+
 
 def buildUrl(symbol, apikey):
     url = "https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol="
@@ -20,6 +21,7 @@ def buildUrl(symbol, apikey):
     url += apikey
     url += "&outputsize=full"
     return url
+
 
 for symbol in config["symbols"]:
     print("Inserting %s data from AlphaVantage into Database..." % symbol)
@@ -32,11 +34,11 @@ for symbol in config["symbols"]:
         # "Error Message" => invalid symbol
 
         if "Note" in response.json():
-            print("Too many requests, waiting ", end ="")
+            print("Too many requests, waiting ", end="")
 
             while "Note" in response.json():
                 time.sleep(10)
-                print(".", end ="")
+                print(".", end="")
                 response = requests.get(buildUrl(symbol, apikey))
 
             print()
