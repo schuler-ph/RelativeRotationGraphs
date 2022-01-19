@@ -4,6 +4,13 @@ from rrg_db import DatabaseManager
 
 
 def setup_plot(fig, ax):
+    ax.set_title("Relative Rotation Graph")
+    ax.set_xlabel("RS-Ratio")
+    ax.set_ylabel("RS-Momentum")
+    plt.figtext(0.14, 0.14, "Lagging", color="red")
+    plt.figtext(0.14, 0.84, "Improving", color="blue")
+    plt.figtext(0.87, 0.84, "Leading", color="green", ha="right")
+    plt.figtext(0.87, 0.14, "Weakening", color="gold", ha="right")
     windowZoom = 5
     lim = [100 - windowZoom, 100 + windowZoom]
     ax.set_xlim(lim)
@@ -28,29 +35,38 @@ def gen_int(string, seed):
     return int
 
 
+def gen_color(symbol):
+    colRed = gen_int(symbol, "r")
+    colGreen = gen_int(symbol, "g")
+    colBlue = gen_int(symbol, "b")
+
+    return "#%02X%02X%02X" % (colRed, colGreen, colBlue)
+
+
 db = DatabaseManager()
 config = db.get_config()
 
 #    0        1            2
 # (date, rsRatioAvg, rsMomentumAvg)
 
+# how many plots should be created
 for i in range(config["history_range"]):
     fig, ax = plt.subplots()
+
     setup_plot(fig, ax)
 
+    # which etfs should be plotted
     for symbol in config["plot_symbols"]:
         dataEft = db.get_plot_data_avg(symbol)
         data = dataEft[i : i + db.get_config()["tail_length"]]
+        range = "From " + data[-1][0] + " to " + data[0][0]
+        plt.figtext(0.5, 0.025, range, ha="center")
+        color = gen_color(symbol)
 
-        colRed = gen_int(symbol, "r")
-        colGreen = gen_int(symbol, "g")
-        colBlue = gen_int(symbol, "b")
-
-        color = "#%02X%02X%02X" % (colRed, colGreen, colBlue)
         for idx, d in enumerate(data):
             if idx == 0:
                 ax.scatter(d[1], d[2], c=color, s=15)
-                ax.text(d[1], d[2], symbol, color="black", fontsize=8)
+                ax.text(d[1] + 0.1, d[2] + 0.1, symbol, color="black", fontsize=8)
             else:
                 ax.scatter(d[1], d[2], c=color, s=5)
                 ax.plot(
@@ -60,5 +76,11 @@ for i in range(config["history_range"]):
                     linewidth=1,
                 )
 
-    plt.savefig("src/plots/avg_plot_" + str(i) + ".png")
+    plt.savefig(
+        "src/plots/"
+        + config["filename"]
+        + "_"
+        + str(config["history_range"] - i)
+        + ".png"
+    )
     plt.close()

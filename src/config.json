@@ -4,6 +4,7 @@
     "rs_ratio_avg": 12,
     "rs_momentum_avg": 5,
     "tail_length": 10,
-    "plot_symbols": ["xlp", "xlf", "xlk"],
-    "history_range": 30
+    "plot_symbols": ["xlp", "xlf", "xlk", "xlv", "xlre", "xlb", "xli", "xlu"],
+    "history_range": 1,
+    "filename": "plot"
 }
