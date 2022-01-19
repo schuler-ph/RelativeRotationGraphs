@@ -3,5 +3,7 @@
     "compare_to": "spy",
     "rs_ratio_avg": 12,
     "rs_momentum_avg": 5,
-    "line_length": 5
+    "tail_length": 10,
+    "plot_symbols": ["xlp", "xlf", "xlk"],
+    "history_range": 30
 }

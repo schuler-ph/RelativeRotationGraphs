@@ -48,9 +48,9 @@ for symbol in config["symbols"]:
             continue
 
     wts = response.json()[dataKey]
-    db = DatabaseManager()
 
     for key, value in wts.items():
         db.insert_value(symbol, key, value[valueKey])
+
 
 db.commit()

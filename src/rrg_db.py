@@ -47,6 +47,20 @@ class DatabaseManager:
         )
         return self.cursor.fetchall()
 
+    def get_plot_data(self, symbol):
+        self.cursor.execute(
+            "SELECT date, rs_ratio, rs_momentum FROM rrg_data WHERE symbol = %s ORDER BY date DESC",
+            (symbol,),
+        )
+        return self.cursor.fetchall()
+
+    def get_plot_data_avg(self, symbol):
+        self.cursor.execute(
+            "SELECT date, rs_ratio_avg, rs_momentum_avg FROM rrg_data WHERE symbol = %s ORDER BY date DESC",
+            (symbol,),
+        )
+        return self.cursor.fetchall()
+
     def insert_value(self, symbol, date, value):
         self.cursor.execute(
             "INSERT INTO rrg_data (symbol, date, value) VALUES (%s, %s, %s)",

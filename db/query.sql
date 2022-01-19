@@ -1,0 +1,1 @@
+SELECT * FROM relativerotationgraphs.rrg_data where symbol != "spy" order by symbol asc, date desc;

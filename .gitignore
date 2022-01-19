@@ -1,3 +1,4 @@
 apikey.txt
 venv/
 __pycache__/
+src/plots/

@@ -3,7 +3,7 @@ from rrg_db import DatabaseManager
 db = DatabaseManager()
 config = db.get_config()
 
-dataSpy = db.get_data("spy")
+dataBenchmark = db.get_data(config["compare_to"])
 #     0      1        2             3           4          5           6            7
 # (symbol, date, closeWeekly, priceRelative, rsRatio, rsRatioAvg, rsMomentum, rsMomentumAvg)
 
@@ -19,7 +19,7 @@ for symbol in config["symbols"]:
     dataEtf = db.get_data(symbol)
 
     for idx, val in enumerate(dataEtf):
-        priceRelative = calc_priceIncrease(val[2], dataSpy[idx][2])
+        priceRelative = calc_priceIncrease(val[2], dataBenchmark[idx][2])
         db.insert_price_relative(symbol, val[1], priceRelative)
 
     db.commit()
