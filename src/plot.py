@@ -11,7 +11,7 @@ def setup_plot(fig, ax):
     plt.figtext(0.14, 0.84, "Improving", color="blue")
     plt.figtext(0.87, 0.84, "Leading", color="green", ha="right")
     plt.figtext(0.87, 0.14, "Weakening", color="gold", ha="right")
-    windowZoom = 5
+    windowZoom = 10
     lim = [100 - windowZoom, 100 + windowZoom]
     ax.set_xlim(lim)
     ax.set_ylim(lim)
@@ -76,11 +76,12 @@ for i in range(config["history_range"]):
                     linewidth=1,
                 )
 
-    plt.savefig(
-        "src/plots/"
-        + config["filename"]
-        + "_"
-        + str(config["history_range"] - i)
-        + ".png"
-    )
+    number = str(config["history_range"] - i)
+
+    if int(number) < 100 and config["history_range"] >= 100:
+        number = "0" + number
+    if int(number) < 10 and config["history_range"] >= 10:
+        number = "0" + number
+
+    plt.savefig("src/plots/" + config["filename"] + "_" + number + ".png")
     plt.close()
