@@ -5,7 +5,8 @@
     "rs_momentum_avg": 5,
     "tail_length": 10,
     "plot_symbols": ["xlp", "xlf", "xlk", "xlv", "xlre", "xlb", "xli", "xlu"],
-    "history_range": 20,
+    "history_range": 10,
     "filename": "plot",
-    "remove_files_after_gif": true
+    "remove_files_after_gif": true,
+    "gif_frame_time_delay": 0.2
 }
