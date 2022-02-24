@@ -24,7 +24,7 @@ The plan is to invest in the stocks, which are in the process of transitioning f
 ```
 git clone https://github.com/schuler-ph/RelativeRotationGraphs.git
 cd RelativeRotationGraphs
-pip install -r requirements.txt
+./install.bat
 ```
 
 * Imageio => Gif-Creator
