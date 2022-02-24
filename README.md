@@ -27,36 +27,36 @@ cd RelativeRotationGraphs
 ./install.bat
 ```
 
-* Imageio => Gif-Creator
-* Matplotlib => Plots
 * Requests => Fetch from Alphavantage.co
+* Matplotlib => Plots
+* Imageio => Gif-Creator
 
 ## Run
 ### config.json
-* symbols: The symbols, which will be fetched from Alphavantage.co in *update_database.py*.
-* compare_to: The benchmark symbol, all symbols will be compared to in *process_data.py*. This will also be fetched in *update_database.py*.
-* rs_ratio_avg and rs_momentum_avg: These are the moving averages for rs_ratio and rs_momentum which have produced the best results and represented the data from RRG Online and Stockcharts.com the best.
-* tail_length: The tail length on the plot in weeks (default = 10).
-* plot_symbols: Which stocks to plot.
-* history_range: How many plots should be created in weeks (default = 10).
-* filename: The filename used to create the plots and gifs (default = "plot").
-* remove_files_after_gif: Defines, if the plot files should be removed, after being used in a gif creation (default = True).
-* gif_frame_time_delay: The time between each frame in the gif in seconds (default = 0.2).
+* **symbols**: The symbols, which will be fetched from Alphavantage.co in `update_database.py`.
+* **compare_to**: The benchmark symbol, all symbols will be compared to in `process_data.py`. This will also be fetched in `update_database.py`.
+* **rs_ratio_avg** & **rs_momentum_avg**: These are the moving averages for rs_ratio and rs_momentum which have produced the best results and represented the data from RRG Online and Stockcharts.com the best (default = 12 & 5).
+* **tail_length**: The tail length on the plot in weeks (default = 10).
+* **plot_symbols**: Which stocks to plot.
+* **history_range**: How many plots should be generated (default = 10).
+* **filename**: The filename used to create the plots and gifs (default = "plot").
+* **remove_files_after_gif**: If set to True, removes all plots after the gif has been generated (default = True).
+* **gif_frame_time_delay**: The time between each frame in the gif in seconds (default = 0.2).
 
 ### apikey.txt
-You will have to get your own Api-Key from Alphavantage.co and save it to a file called *apikey.txt* in the root repository folder.
+You will have to get your own Api-Key from Alphavantage.co and save it to a file called `apikey.txt` in the root repository folder.
 
 ### rrg_db.py
-In this file you will find the database manager, which saves the fetched data to a MySQL database and is generally in charge for all database operations. Update the *__init__* function with your own user credentials and database.
+In this file you will find the database manager, which saves the fetched data to a MySQL database and is generally in charge for all database operations. Update the `__init__` function with your own user credentials and database.
 
 ### update_database.py
-This file will fetch the data from Alphavantage.co from the TIME_SERIES_WEEKLY function. It will fetch all the symbols defined in the config *symybols* and *compare_to* and save them to the MySQL database.
+This file will fetch the data from Alphavantage.co from the `TIME_SERIES_WEEKLY` API method. It will fetch all the symbols defined in the config **symybols** and **compare_to** and save them to the MySQL database.
 
 ### process_data.py
-This fills the database with the needed data for the plot (price_relative, rs_ratio, rs_ratio_avg, rs_momentum, rs_momentum avg)
+This fills the database with the needed data for the plot (*price_relative*, *rs_ratio*, *rs_ratio_avg*, *rs_momentum*, *rs_momentum avg*)
 
 ### plot.py
 Creates a matplotlib scatter plot with the four sectors.
 
 ### create_gif.py
-Uses imageio to generate a gif with **all** the files provided in the src/plots/ folder.
+Generates a gif image with **all** the files provided in the src/plots/ folder.
